@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">PassportChallenge</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="male">MALE</string>
+    <string name="female">FEMALE</string>
 </resources>

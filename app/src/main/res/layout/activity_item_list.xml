@@ -12,11 +12,9 @@
             type="thornton.mj.com.passportchallenge.ui.MainViewModel" />
     </data>
 
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="android.com.passport.ui.screens.ItemListActivity">
+        android:layout_height="match_parent">
 
 
         <android.support.design.widget.AppBarLayout
@@ -33,25 +31,37 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <!--<FrameLayout-->
+        <!--android:id="@+id/frameLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+        <!--<include layout="@layout/item_list" />-->
+        <!--</FrameLayout>-->
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:indeterminate="true"
-        android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
-        app:layout_constraintBottom_toTopOf="@+id/refresh_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@id/refresh_button"
-        android:text="@{viewModel.text}" />
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/repository_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:indeterminate="true"
+            android:visibility="@{viewModel.isLoading ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar"
+            tools:listitem="@layout/rv_item_profile" />
 
         <Button
             android:id="@+id/refresh_button"
@@ -61,7 +71,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.refresh()}"
+            android:onClick="@{() -> viewModel.loadProfiles()}"
             android:clickable="@{viewModel.isLoading ? false : true}"
             android:text="Refresh"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,8 +80,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+    </android.support.constraint.ConstraintLayout>
 
-
+</layout>
 
 
     <!--<FrameLayout-->
@@ -93,6 +104,3 @@
 
 
 <!--</android.support.design.widget.CoordinatorLayout>-->
-    </android.support.constraint.ConstraintLayout>
-
-</layout>

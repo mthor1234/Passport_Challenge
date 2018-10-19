@@ -1,26 +1,19 @@
 package thornton.mj.com.passportchallenge.ui.mainscreen
 
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
+import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
-import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.support.v7.widget.LinearLayoutManager
+import android.arch.lifecycle.ViewModelProviders
 
-import thornton.mj.com.passportchallenge.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_item_list.*
-import kotlinx.android.synthetic.main.item_list_content.view.*
 import kotlinx.android.synthetic.main.item_list.*
 import thornton.mj.com.passportchallenge.R
 import thornton.mj.com.passportchallenge.databinding.ActivityItemListBinding
+import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.MainViewModel
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailActivity
-import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailFragment
 
 /**
  * An activity representing a list of Pings. This activity
@@ -30,7 +23,7 @@ import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailFragment
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ItemListActivity : AppCompatActivity() {
+class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemClickListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -40,6 +33,7 @@ class ItemListActivity : AppCompatActivity() {
 
     // Create binding
     lateinit var binding : ActivityItemListBinding
+    private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +41,16 @@ class ItemListActivity : AppCompatActivity() {
 //        setContentView(R.layout.activity_item_list)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
-        binding.viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        binding.viewModel = viewModel
         binding.executePendingBindings()
+
+        binding.repositoryRv.layoutManager = LinearLayoutManager(this)
+        binding.repositoryRv.adapter = repositoryRecyclerViewAdapter
+        viewModel.profiles.observe(this,
+                Observer<ArrayList<Profile>> { it?.let{repositoryRecyclerViewAdapter.replaceData(it)} })
+
+
 
         setSupportActionBar(toolbar)
         toolbar.title = title
@@ -67,6 +69,10 @@ class ItemListActivity : AppCompatActivity() {
         }
 
 //        setupRecyclerView(item_list)
+    }
+
+    override fun onItemClick(position: Int, repo: Profile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 //    private fun setupRecyclerView(recyclerView: RecyclerView) {

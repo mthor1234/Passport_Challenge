@@ -1,23 +1,45 @@
 package thornton.mj.com.passportchallenge.repo
+
+import android.content.Context
 import android.os.Handler
+import io.reactivex.Observable
+import thornton.mj.com.passportchallenge.repo.RepoRemoteDataSource.*
+import thornton.mj.com.passportchallenge.util.NetManager
+import java.util.ArrayList
+import java.util.concurrent.TimeUnit
 
-class RepoModel {
+class RepoModel(val netManager : NetManager) {
 
-//    private val localDataSource = RepoLocalDataSource()
+    private val localDataSource = RepoLocalDataSource()
+    private val remoteDataSource = RepoRemoteDataSource()
 
-//    fun getProfiles() : Observable<ArrayList<Profile>> {
-//
-//        return localDataSource.getProfiles()
-//    }
 
-    // Refresh data with a 2 second delay to simiulate networking
-    fun refreshData(onDataReadyCallBack : OnDataReadyCallback){
-        Handler().postDelayed({ onDataReadyCallBack.onDataReady("new data")} , 2000)
+    fun getProfiles(onRepositoryReadyCallback: OnRepositoryReadyCallback){
+
+
+        netManager.isConnectedToInternet?.let {
+            if(it) {
+                remoteDataSource.getProfiles(object : OnRepoRemoteReadyCallback {
+                    override fun onRemoteDataReady(data: ArrayList<Profile>) {
+                        localDataSource.saveProfiles(data)
+                        onRepositoryReadyCallback.onDataReady(data)
+                    }
+                })
+            } else {
+                localDataSource.getProfiles(object : RepoLocalDataSource.OnRepoLocalReadyCallback{
+                    override fun onLocalDataReady(data: ArrayList<Profile>) {
+                        onRepositoryReadyCallback.onDataReady(data)
+                    }
+                })
+            }
+        }
+
     }
 
+
     // Interface used for communication between VM
-    interface OnDataReadyCallback {
-        fun onDataReady(data : String)
+    interface OnRepositoryReadyCallback {
+        fun onDataReady(data : ArrayList<Profile>)
     }
 
 }
