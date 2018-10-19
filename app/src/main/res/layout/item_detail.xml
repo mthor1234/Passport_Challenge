@@ -50,11 +50,17 @@
         app:layout_constraintTop_toTopOf="@id/profile_age"
         app:layout_constraintLeft_toRightOf="@id/profile_age" />
 
-    <EditText
-        android:id="@+id/profile_hobbies"
-        android:layout_width="250dp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/profile_rv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_age"
-        app:layout_constraintStart_toStartOf="@id/profile_age"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_age" />
+
+    <!--<EditText-->
+        <!--android:id="@+id/profile_hobbies"-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_constraintTop_toBottomOf="@id/profile_age"-->
+        <!--app:layout_constraintStart_toStartOf="@id/profile_age"/>-->
 
 </android.support.constraint.ConstraintLayout>
