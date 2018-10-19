@@ -9,6 +9,7 @@ import thornton.mj.com.passportchallenge.dummy.DummyContent
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail.view.*
 import thornton.mj.com.passportchallenge.R
+import thornton.mj.com.passportchallenge.repo.Profile
 
 /**
  * A fragment representing a single Item detail screen.
@@ -21,7 +22,7 @@ class ItemDetailFragment : Fragment() {
     /**
      * The dummy content this fragment is presenting.
      */
-    private var item: DummyContent.DummyItem? = null
+    private var item: Profile? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +32,8 @@ class ItemDetailFragment : Fragment() {
                 // Load the dummy content specified by the fragment
                 // arguments. In a real-world scenario, use a Loader
                 // to load content from a content provider.
-                item = DummyContent.ITEM_MAP[it.getString(ARG_ITEM_ID)]
-                activity?.toolbar_layout?.title = item?.content
+//                item = View.ITEM_MAP[it.getString(ARG_ITEM_ID)]
+                activity?.toolbar_layout?.title = it.getInt(ARG_ITEM_ID).toString()
             }
         }
     }
@@ -43,7 +44,7 @@ class ItemDetailFragment : Fragment() {
 
         // Show the dummy content as text in a TextView.
         item?.let {
-            rootView.item_detail.text = it.details
+//            rootView.item_detail.text = it.details
         }
 
         return rootView
@@ -55,5 +56,8 @@ class ItemDetailFragment : Fragment() {
          * represents.
          */
         const val ARG_ITEM_ID = "item_id"
-    }
+        const val ARG_ITEM_NAME = "item_name"
+        const val ARG_ITEM_AGE = "item_age"
+        const val ARG_ITEM_GENDER = "item_gender"
+        const val ARG_ITEM_HOBBIES = "item_hobbies"    }
 }

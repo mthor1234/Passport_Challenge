@@ -29,16 +29,16 @@ class RepositoryRecyclerViewAdapter(private var items: ArrayList<Profile>,
 
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int, repo : Profile)
+        fun onItemClick(position: Int, profile : Profile)
     }
 
     class ViewHolder(private var binding: RvItemProfileBinding) :
             RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(repo: Profile, listener: OnItemClickListener?) {
-            binding.profile = repo
+        fun bind(profile: Profile, listener: OnItemClickListener?) {
+            binding.profile = profile
             if (listener != null) {
-                binding.root.setOnClickListener({ _ -> listener.onItemClick(layoutPosition, repo)
+                binding.root.setOnClickListener({ _ -> listener.onItemClick(layoutPosition, profile)
                     println("Pressed ViewHolder!")
                 })
 
