@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
@@ -14,6 +17,7 @@ import thornton.mj.com.passportchallenge.databinding.ActivityItemListBinding
 import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.MainViewModel
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailActivity
+import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailFragment
 
 /**
  * An activity representing a list of Pings. This activity
@@ -29,6 +33,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+
+    //TODO: Load Data on Creation
+
     private var twoPane: Boolean = false
 
     // Create binding
@@ -71,8 +78,43 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 //        setupRecyclerView(item_list)
     }
 
-    override fun onItemClick(position: Int, repo: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onItemClick(position: Int, profile: Profile) {
+
+//        val item = v.tag as profile
+        if (twoPane) {
+            val fragment = ItemDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ItemDetailFragment.ARG_ITEM_ID, profile.id)
+                    putString(ItemDetailFragment.ARG_ITEM_NAME, profile.profileName)
+                    putInt(ItemDetailFragment.ARG_ITEM_AGE, profile.age)
+                    putString(ItemDetailFragment.ARG_ITEM_GENDER, profile.gender)
+                    putString(ItemDetailFragment.ARG_ITEM_HOBBIES, profile.getStringOfHobbies())
+                }
+            }
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit()
+        } else {
+            val intent = Intent(this, ItemDetailActivity::class.java).apply {
+                putExtra(ItemDetailFragment.ARG_ITEM_ID, profile.id)
+
+//                val gson = Gson()
+//                val type = object : TypeToken<List<Student>>() {
+//                }.getType()
+
+                val profileJson = Gson().toJson(profile)
+
+                println("Profile: $profileJson ")
+
+//                val json = gson.toJson(students, type)
+//                val intent = Intent(baseContext, YourActivity::class.java)
+                putExtra(ItemDetailFragment.ARG_ITEM_PROFILE, profileJson)
+
+            }
+            startActivity(intent)
+        }
+
     }
 
 //    private fun setupRecyclerView(recyclerView: RecyclerView) {

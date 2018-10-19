@@ -14,4 +14,8 @@ class Profile(var id : Int, var profileName : String, var age: Int, var gender: 
         }
         return sb.toString()
     }
+
+    fun printProfile(){
+        println("id : $id Name: $profileName  Age: $age  Gender: $gender  Hobbies: ${getStringOfHobbies()}")
+    }
 }
