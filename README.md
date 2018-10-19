@@ -19,5 +19,8 @@ Issues:
     - If I can't figure out how to share the ViewModel, then I'll pass the data to the Detail Activity/Fragment in a Bundle/Extra but I'd like it to be seamless with the MVVM pattern and update the data in realtime instead of relying on an update data method. 
 
 
+    - Was stuck so I used Gson to package up the selected Profile and pass it in the Bundle to the DetailActivity, then retrieve it in the DetailFragment
+
+
  
 *** Tried using Dagger 2 for dependency injection but am struggling. Will come back if there is time

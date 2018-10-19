@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_item_detail.*
 import thornton.mj.com.passportchallenge.R
+import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.mainscreen.ItemListActivity
 
 /**
@@ -46,6 +48,14 @@ class ItemDetailActivity : AppCompatActivity() {
                 arguments = Bundle().apply {
                     putInt(ItemDetailFragment.ARG_ITEM_ID,
                             intent.getIntExtra(ItemDetailFragment.ARG_ITEM_ID, 0))
+
+                    val profileGson = intent.getStringExtra(ItemDetailFragment.ARG_ITEM_PROFILE)
+
+
+                    println("Passed Profile: $profileGson")
+
+
+                    putString(ItemDetailFragment.ARG_ITEM_PROFILE, profileGson)
                 }
             }
 

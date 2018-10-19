@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
@@ -96,6 +98,19 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         } else {
             val intent = Intent(this, ItemDetailActivity::class.java).apply {
                 putExtra(ItemDetailFragment.ARG_ITEM_ID, profile.id)
+
+//                val gson = Gson()
+//                val type = object : TypeToken<List<Student>>() {
+//                }.getType()
+
+                val profileJson = Gson().toJson(profile)
+
+                println("Profile: $profileJson ")
+
+//                val json = gson.toJson(students, type)
+//                val intent = Intent(baseContext, YourActivity::class.java)
+                putExtra(ItemDetailFragment.ARG_ITEM_PROFILE, profileJson)
+
             }
             startActivity(intent)
         }
