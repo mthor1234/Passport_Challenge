@@ -5,6 +5,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
+import com.google.firebase.database.FirebaseDatabase
 import thornton.mj.com.passportchallenge.repo.*
 import thornton.mj.com.passportchallenge.repo.RepoModel.*
 import thornton.mj.com.passportchallenge.util.NetManager
@@ -43,6 +44,5 @@ class MainViewModel : AndroidViewModel {
             }
         })
     }
-
 
 }

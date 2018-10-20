@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "227125733731",
+    "firebase_url": "https://passportchallenge-5cf34.firebaseio.com",
+    "project_id": "passportchallenge-5cf34",
+    "storage_bucket": "passportchallenge-5cf34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227125733731:android:97b4f4b4fcb44565",
+        "android_client_info": {
+          "package_name": "thornton.mj.com.passportchallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227125733731-adhkj3h6u8hc9eekmch58cn69fskpgok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thornton.mj.com.passportchallenge",
+            "certificate_hash": "15b05ea30076f0dfb6e2b229760dbf9640abf8b0"
+          }
+        },
+        {
+          "client_id": "227125733731-rs5njpd1q3ktsn78het32d3bqg5tigci.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhr1onscPY4AmnNP5Vmi1CDq01d9Xyy_Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227125733731-rs5njpd1q3ktsn78het32d3bqg5tigci.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

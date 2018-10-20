@@ -18,6 +18,15 @@ import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.MainViewModel
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailActivity
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailFragment
+import android.databinding.adapters.NumberPickerBindingAdapter.setValue
+import android.support.v4.app.FragmentActivity
+import android.util.Log
+import com.google.firebase.database.*
+import thornton.mj.com.passportchallenge.BR.profile
+import com.google.firebase.database.DataSnapshot
+
+
+
 
 /**
  * An activity representing a list of Pings. This activity
@@ -57,10 +66,11 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         viewModel.profiles.observe(this,
                 Observer<ArrayList<Profile>> { it?.let{repositoryRecyclerViewAdapter.replaceData(it)} })
 
-
+// Write a message to the database
 
         setSupportActionBar(toolbar)
         toolbar.title = title
+
 
 //        fab.setOnClickListener { view ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -75,8 +85,8 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             twoPane = true
         }
 
-//        setupRecyclerView(item_list)
     }
+
 
     override fun onItemClick(position: Int, profile: Profile) {
 
@@ -117,62 +127,4 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     }
 
-//    private fun setupRecyclerView(recyclerView: RecyclerView) {
-////        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
-//        recyclerView.adapter = SimpleItemRecyclerViewAdapter(this, DummyContent.ITEMS, twoPane)
-//    }
-
-//    class SimpleItemRecyclerViewAdapter(private val parentActivity: ItemListActivity,
-//                                        private val values: List<DummyContent.DummyItem>,
-//                                        private val twoPane: Boolean) :
-//            RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
-//
-//        private val onClickListener: View.OnClickListener
-//
-//        init {
-//            onClickListener = View.OnClickListener { v ->
-//                val item = v.tag as DummyContent.DummyItem
-//                if (twoPane) {
-//                    val fragment = ItemDetailFragment().apply {
-//                        arguments = Bundle().apply {
-//                            putString(ItemDetailFragment.ARG_ITEM_ID, item.id)
-//                        }
-//                    }
-//                    parentActivity.supportFragmentManager
-//                            .beginTransaction()
-//                            .replace(R.id.item_detail_container, fragment)
-//                            .commit()
-//                } else {
-//                    val intent = Intent(v.context, ItemDetailActivity::class.java).apply {
-//                        putExtra(ItemDetailFragment.ARG_ITEM_ID, item.id)
-//                    }
-//                    v.context.startActivity(intent)
-//                }
-//            }
-//        }
-//
-//        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//            val view = LayoutInflater.from(parent.context)
-//                    .inflate(R.layout.item_list_content, parent, false)
-//            return ViewHolder(view)
-//        }
-//
-//        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//            val item = values[position]
-//            holder.idView.text = item.id
-//            holder.contentView.text = item.content
-//
-//            with(holder.itemView) {
-//                tag = item
-//                setOnClickListener(onClickListener)
-//            }
-//        }
-//
-//        override fun getItemCount() = values.size
-//
-//        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-//            val idView: TextView = view.id_text
-//            val contentView: TextView = view.content
-//        }
-//    }
 }

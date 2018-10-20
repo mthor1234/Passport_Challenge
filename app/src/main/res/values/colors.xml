@@ -6,6 +6,7 @@
     <color name="blue">#00F</color>
     <color name="pink">#ff69b4 </color>
     <color name="white">#fff </color>
+    <color name="black">#000 </color>
 
     <drawable name="blue">#00F</drawable>
     <drawable name="pink">#ff69b4</drawable>

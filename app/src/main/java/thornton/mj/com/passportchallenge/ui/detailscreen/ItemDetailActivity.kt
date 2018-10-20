@@ -10,6 +10,11 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
 import thornton.mj.com.passportchallenge.R
 import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.mainscreen.ItemListActivity
+import android.databinding.adapters.NumberPickerBindingAdapter.setValue
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
+
 
 /**
  * An activity representing a single Item detail screen. This
@@ -51,10 +56,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
                     val profileGson = intent.getStringExtra(ItemDetailFragment.ARG_ITEM_PROFILE)
 
-
                     println("Passed Profile: $profileGson")
-
-
                     putString(ItemDetailFragment.ARG_ITEM_PROFILE, profileGson)
                 }
             }
