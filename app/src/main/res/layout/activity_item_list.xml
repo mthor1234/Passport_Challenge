@@ -12,7 +12,12 @@
             type="thornton.mj.com.passportchallenge.ui.MainViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -39,7 +44,6 @@
         <!--<include layout="@layout/item_list" />-->
         <!--</FrameLayout>-->
 
-
         <ProgressBar
             android:id="@+id/loading"
             android:layout_width="48dp"
@@ -50,6 +54,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/repository_rv"
@@ -79,8 +84,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
-
     </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 </layout>
 

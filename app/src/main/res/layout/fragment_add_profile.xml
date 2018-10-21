@@ -1,0 +1,59 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/addprofile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
+        android:hint="@string/name"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"/>
+
+    <EditText
+        android:id="@+id/addprofile_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
+        android:hint="@string/age"
+        app:layout_constraintTop_toBottomOf="@id/addprofile_name"/>
+
+    <EditText
+        android:id="@+id/addprofile_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
+        android:hint="@string/gender"
+        app:layout_constraintTop_toBottomOf="@id/addprofile_age"/>
+
+    <EditText
+        android:id="@+id/addprofile_hobbies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@color/white"
+        android:hint="@string/hobbies"
+        app:layout_constraintTop_toBottomOf="@id/addprofile_gender"/>
+
+    <Button
+        android:id="@+id/addprofile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/save_profile"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!--<com.google.android.gms.plus.PlusOneButton xmlns:plus="http://schemas.android.com/apk/lib/com.google.android.gms.plus"-->
+        <!--android:id="@+id/plus_one_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--plus:annotation="inline"-->
+        <!--plus:size="standard" />-->
+
+</android.support.constraint.ConstraintLayout>

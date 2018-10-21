@@ -1,5 +1,6 @@
 package thornton.mj.com.passportchallenge.ui.mainscreen
 
+import android.app.Dialog
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -7,9 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.net.Uri
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-
 import kotlinx.android.synthetic.main.activity_item_list.*
 import kotlinx.android.synthetic.main.item_list.*
 import thornton.mj.com.passportchallenge.R
@@ -18,12 +18,14 @@ import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.MainViewModel
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailActivity
 import thornton.mj.com.passportchallenge.ui.detailscreen.ItemDetailFragment
-import android.databinding.adapters.NumberPickerBindingAdapter.setValue
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import com.google.firebase.database.*
-import thornton.mj.com.passportchallenge.BR.profile
-import com.google.firebase.database.DataSnapshot
+import android.view.Menu
+import android.view.MenuItem
+import android.graphics.drawable.ColorDrawable
+import android.graphics.Color
+import android.view.View
+import android.widget.Button
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_add_profile.*
 
 
 
@@ -36,8 +38,7 @@ import com.google.firebase.database.DataSnapshot
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemClickListener {
-
+class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemClickListener, AddProfileFragment.OnFragmentInteractionListener {
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -46,6 +47,8 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     //TODO: Load Data on Creation
 
     private var twoPane: Boolean = false
+
+    lateinit var dialog : Dialog
 
     // Create binding
     lateinit var binding : ActivityItemListBinding
@@ -60,6 +63,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         binding.viewModel = viewModel
         binding.executePendingBindings()
+
+        dialog = Dialog(this)
+
 
         binding.repositoryRv.layoutManager = LinearLayoutManager(this)
         binding.repositoryRv.adapter = repositoryRecyclerViewAdapter
@@ -86,7 +92,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         }
 
     }
-
 
     override fun onItemClick(position: Int, profile: Profile) {
 
@@ -125,6 +130,89 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             startActivity(intent)
         }
 
+    }
+
+//    fun showDialog() {
+//        val newFragment : Fragment = AddProfileFragment.newInstance("test", "test")
+//        supportFragmentManager.beginTransaction().add(R.id.overlay_fragment_container, newFragment).commit()
+//    }
+
+    fun showPopup() {
+//        val txtclose: TextView
+//        val btnFollow: Button
+
+        dialog.setContentView(R.layout.fragment_add_profile)
+
+        dialog.findViewById<Button>(R.id.addprofile_button).setOnClickListener {
+            val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference()
+
+             val userId : String = myRef.push().key!!
+
+            val list : ArrayList<String> = arrayListOf("Football", "Medicine", "Sleeping")
+
+            val al = Profile(4, "Alex Ward", 26, "Male", list)
+//                users.put("5", Profile(5, "Lauren M", 27, "Female", list))
+
+                dialog.dismiss()
+                myRef.child(userId).setValue(al)
+        }
+
+//        txtclose = myDialog.findViewById(R.id.txtclose)
+//        txtclose.text = "M"
+//        btnFollow = myDialog.findViewById(R.id.btnfollow) as Button
+
+//        addprofile_name.setText("Testing")
+
+//        addprofile_button.setOnClickListener(View.OnClickListener() {
+//            println("Add Profile")
+//        })
+
+//        addprofile_button.setOnClickListener {
+//                val database = FirebaseDatabase.getInstance()
+//                val myRef = database.getReference()
+//                val users = HashMap<String, Profile>()
+//
+//
+//                users.put("4", Profile(4, "Alex Ward", 26, "Male", listOf("Football", "Medicine", "Sleeping") as ArrayList<String>))
+//                users.put("5", Profile(5, "Lauren M", 27, "Female", listOf("Real Estate", "West Hartford", "Vodka") as ArrayList<String>))
+//
+//                myDialog.dismiss()
+//                myRef.setValue(users)
+//            }
+
+
+        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id : Int = item!!.itemId
+
+
+        when(id){
+            R.id.menu_sort ->  {
+                println("Sort")
+//                var sortedListByName = DummyContent.ITEMS.sortedWith(compareBy { it.age })
+            }
+            R.id.menu_filter ->  println("Filter")
+            R.id.menu_add ->  {
+                println("Add Profile")
+                showPopup()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        println("Add Profile Interaction")
     }
 
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/menu_sort"
+        android:orderInCategory="100"
+        android:title="User"
+        android:icon="@drawable/ic_sort_white_24dp"
+        app:showAsAction="ifRoom">
+
+    <menu>
+
+        <group android:id="@+id/sort_group"
+            android:checkableBehavior="single">
+            <item android:id="@+id/menu_sort_by_name"
+                android:icon="@drawable/ic_arrow_upward_white_24dp"
+                android:title="@string/name"/>
+            <item android:id="@+id/menu_sort_by_gender"
+                android:icon="@drawable/ic_arrow_downward_white_24dp"
+                android:title="@string/gender"/>
+        </group>
+    </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/menu_filter"
+        android:orderInCategory="200"
+        android:title="User"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/menu_add"
+        android:orderInCategory="300"
+        android:title="User"
+        android:icon="@drawable/ic_add_white_24dp"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>
