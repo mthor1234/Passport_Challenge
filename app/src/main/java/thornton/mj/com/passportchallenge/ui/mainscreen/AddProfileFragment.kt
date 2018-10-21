@@ -11,11 +11,11 @@ import android.view.ViewGroup
 
 import thornton.mj.com.passportchallenge.R
 
-
+// TODO: Add ability to submit when clicking enter
+// TODO: EditText Fields should start with capital letter
 class AddProfileFragment : Fragment() {
     // The URL to +1.  Must be a valid URL.
     private val PLUS_ONE_URL = "http://developer.android.com"
-    // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
 

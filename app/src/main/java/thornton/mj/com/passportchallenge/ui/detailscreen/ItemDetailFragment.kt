@@ -1,12 +1,15 @@
 package thornton.mj.com.passportchallenge.ui.detailscreen
 
+import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
+import android.support.v4.app.NavUtils.navigateUpTo
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -22,8 +25,10 @@ import kotlinx.android.synthetic.main.activity_item_detail.*
 import kotlinx.android.synthetic.main.item_detail.*
 import kotlinx.android.synthetic.main.item_detail.view.*
 import kotlinx.android.synthetic.main.item_list_content.view.*
+import org.jetbrains.anko.support.v4.toast
 import thornton.mj.com.passportchallenge.R
 import thornton.mj.com.passportchallenge.repo.Profile
+import thornton.mj.com.passportchallenge.ui.mainscreen.ItemListActivity
 
 /**
  * A fragment representing a single Item detail screen.
@@ -32,9 +37,7 @@ import thornton.mj.com.passportchallenge.repo.Profile
  * on handsets.
  */
 
-// TODO: Change Hobbies to a RecyclerView so it can be displayed and edited easier
-// TODO: Add ability to add items to the RecyclerView
-
+// TODO: Delete Profiles
 
 class ItemDetailFragment : Fragment(){
 
@@ -88,6 +91,10 @@ class ItemDetailFragment : Fragment(){
 
         var addItemBtn = rootView.findViewById<FloatingActionButton>(R.id.addItemBtn)
 
+        var deleteProfileBtn = rootView.findViewById<ImageButton>(R.id.profile_deleteprofile).setOnClickListener {
+            showDeleteProfilePopUp()
+        }
+
         rootView.profile_rv.addItemDecoration(DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL))
         rootView.profile_rv.layoutManager = LinearLayoutManager(this.context)
 
@@ -117,7 +124,6 @@ class ItemDetailFragment : Fragment(){
         itemTouchHelper.attachToRecyclerView(rootView.profile_rv)
 
         addItemBtn.setOnClickListener{
-            // TODO: Add hobby to Recyclerview
             showPopup()
 
         }
@@ -138,13 +144,9 @@ class ItemDetailFragment : Fragment(){
                 simpleAdapter.addItem(hobbyText)
                 simpleAdapter.notifyDataSetChanged()
 
-
                 dialog.dismiss()
 
-                val tempArrayList = profile.hobbies
-                tempArrayList.add(hobbyText)
-
-                val al = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, tempArrayList)
+                val al = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, simpleAdapter.getItems())
                 myRef.child(profile.dbID).setValue(al)
 
                 dialog.dismiss()
@@ -157,6 +159,61 @@ class ItemDetailFragment : Fragment(){
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
+
+    fun showDeleteProfilePopUp(){
+        // Late initialize an alert dialog object
+        lateinit var dialog:AlertDialog
+
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(context)
+
+        // Set a title for alert dialog
+        builder.setTitle("Delete User Profile?")
+
+        // Set a message for alert dialog
+        builder.setMessage("Are you sure you want to delete this profile?")
+
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{_,which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> {
+                    toast("Yes button clicked.")
+                    // TODO: Run this in bg thread???
+
+                    println("REMOVE PROFILE: " + profile.dbID)
+
+                    myRef.child(profile.dbID).removeValue()
+
+                    val intent = Intent(context, ItemListActivity::class.java)
+                    startActivity(intent)
+                    onDestroy()
+
+                }
+                DialogInterface.BUTTON_NEGATIVE -> toast("No button clicked.")
+                DialogInterface.BUTTON_NEUTRAL -> toast("Cancel button clicked.")
+            }
+        }
+
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("YES",dialogClickListener)
+
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("NO",dialogClickListener)
+
+        // Set the alert dialog neutral/cancel button
+        builder.setNeutralButton("CANCEL",dialogClickListener)
+
+
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+
+        // Finally, display the alert dialog
+        dialog.show()
+    }
+
 
 
     companion object {
