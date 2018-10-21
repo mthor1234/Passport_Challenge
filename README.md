@@ -42,8 +42,15 @@ Issues:
 ////////// MAIN SCREEN //////////////////////
 
     - How should I handle creating a new user profile? Dialog Fragment???
+        * Used a Dialog Fragment that pops up and displays a form to the user. FB backend is updated when the user clicks submit
 
 
 ////////// DETAIL SCREEN //////////////////////
     
-    - Would like to add an onItemLongPress() to bring up a context menu to delete / edit Hobby items on the RecyclerView but this is too much. Settling to use an "x" icon on each hobby for deletion. Floating Action Bar will be used to add Hobbies
+    - Would like to add an onItemLongPress() to bring up a context menu to delete / edit Hobby items on the RecyclerView but this is too much. 
+    * Instead, I used a swipe to delete function
+
+
+
+
+

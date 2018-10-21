@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_item_detail.*
@@ -41,11 +42,16 @@ class ItemDetailFragment : Fragment(){
     lateinit var simpleAdapter : SimpleAdapter
 
     lateinit var dialog : Dialog
+    lateinit var database: FirebaseDatabase
+    lateinit var myRef: DatabaseReference
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        database = FirebaseDatabase.getInstance()
+        myRef = database.getReference()
 
         arguments?.let {
             if (it.containsKey(ARG_ITEM_ID)) {
@@ -100,6 +106,9 @@ class ItemDetailFragment : Fragment(){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = rootView.profile_rv.adapter as SimpleAdapter
                 adapter.removeAt(viewHolder.adapterPosition)
+
+                val al = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, adapter.getItems())
+                myRef.child(profile.dbID).setValue(al)
             }
         }
 
@@ -109,7 +118,6 @@ class ItemDetailFragment : Fragment(){
 
         addItemBtn.setOnClickListener{
             // TODO: Add hobby to Recyclerview
-//            simpleAdapter.addItem("Test")
             showPopup()
 
         }
@@ -122,9 +130,6 @@ class ItemDetailFragment : Fragment(){
         dialog.setContentView(R.layout.fragment_add_hobby)
 
         dialog.findViewById<Button>(R.id.addhobby_btn).setOnClickListener {
-            val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference()
-
             val hobbyText = dialog.findViewById<TextView>(R.id.addhobby_et).text.toString()
 
             //TODO: Add text checks to ensure hobby is long enough. Disable submit button if it is not long enough
@@ -136,30 +141,17 @@ class ItemDetailFragment : Fragment(){
 
                 dialog.dismiss()
 
-                println("MY DB ID: ${profile.dbID}")
-
                 val tempArrayList = profile.hobbies
                 tempArrayList.add(hobbyText)
 
                 val al = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, tempArrayList)
-
-//                myRef.child(profile.dbID).child("hobbies").setValue(profile.hobbies.add(hobbyText))
-
-
                 myRef.child(profile.dbID).setValue(al)
-
-
-
 
                 dialog.dismiss()
 
             }else{
                 Toast.makeText(context, "Text Length Must Be Greater Than 0",Toast.LENGTH_SHORT).show()
             }
-
-
-
-
         }
 
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -184,10 +176,9 @@ class ItemDetailFragment : Fragment(){
 
 
     class MyItemRecyclerViewAdapter(
-            private val values: List<String>,
+            val values: List<String>,
             private val twoPane : Boolean )
         : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
-
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -208,11 +199,12 @@ class ItemDetailFragment : Fragment(){
 
         override fun getItemCount() = values.size
 
+
+
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val idView: TextView = view.id_text
 
         }
-
     }
 
 }

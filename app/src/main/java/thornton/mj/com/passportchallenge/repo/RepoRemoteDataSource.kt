@@ -41,11 +41,6 @@ class RepoRemoteDataSource() {
         Handler().postDelayed({ onRepositoryReadyCallback.onRemoteDataReady(arrayList) }, 2000)
     }
 
-//        fun saveProfiles(arrayList: ArrayList<Profile>) : Completable {
-//            //The Completable class represents a deferred computation without any value but only indication for completion or exception.
-//            return Single.just(1).delay(1,TimeUnit.SECONDS).toCompletable()
-//        }
-
 
     fun setData(dataSnapshot: DataSnapshot): ArrayList<Profile> {
 
@@ -66,7 +61,6 @@ class RepoRemoteDataSource() {
             )
 
             profiles.add(userProfile)
-            //childToArrayList(snapshot.child("Hobbies").children)
         }
         return profiles
     }

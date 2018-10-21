@@ -21,6 +21,9 @@ class SimpleAdapter(private val items: ArrayList <String>) : RecyclerView.Adapte
 
     override fun getItemCount(): Int = items.size
 
+    public fun getItems() = items
+
+
 
     fun removeAt(position: Int) {
         items.removeAt(position)

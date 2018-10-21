@@ -107,19 +107,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         } else {
             val intent = Intent(this, ItemDetailActivity::class.java).apply {
                 putExtra(ItemDetailFragment.ARG_ITEM_ID, profile.id)
-
-                println("Putting user DBID: ${profile.dbID}" )
-
-//                val gson = Gson()
-//                val type = object : TypeToken<List<Student>>() {
-//                }.getType()
-
                 val profileJson = Gson().toJson(profile)
-
-                println("Profile: $profileJson ")
-
-//                val json = gson.toJson(students, type)
-//                val intent = Intent(baseContext, YourActivity::class.java)
                 putExtra(ItemDetailFragment.ARG_ITEM_PROFILE, profileJson)
 
             }
