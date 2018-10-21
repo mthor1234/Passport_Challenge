@@ -1,5 +1,6 @@
 package thornton.mj.com.passportchallenge.ui.mainscreen
 
+import android.app.Dialog
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -19,6 +20,8 @@ class AddProfileFragment : Fragment() {
     private var mParam2: String? = null
 
     private var mListener: OnFragmentInteractionListener? = null
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

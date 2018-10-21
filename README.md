@@ -5,11 +5,14 @@ Utilizes a MVVM with a Repository(s), DataBinding, and LiveData Design Pattern.
 Decided to use a Master/Detail layout to easily display profile views while supporting wider screen devices like Tablets
 
 
-Firebase backend.
+Firebase backend using a Realtime Database
 
 
 
 Issues:
+
+
+//////////// VIEWMODEL /////////////////
 
 *** Having trouble on deciding how handle the ViewModel between the Master and Detail Activities.
 
@@ -22,5 +25,25 @@ Issues:
     - Was stuck so I used Gson to package up the selected Profile and pass it in the Bundle to the DetailActivity, then retrieve it in the DetailFragment
 
 
+//////////// DEPENDENCY INJECTION /////////////////
  
 *** Tried using Dagger 2 for dependency injection but am struggling. Will come back if there is time
+
+
+////////// FIREBASE //////////////////////
+
+   - Need to generate unique ID's -> Firebase has a built in method for it for storing the items. But each user's unique ID can be generated / guaranteed unique by using a HashList
+
+    - Need to figure out how to handle storing / retrieving photos
+
+
+
+
+////////// MAIN SCREEN //////////////////////
+
+    - How should I handle creating a new user profile? Dialog Fragment???
+
+
+////////// DETAIL SCREEN //////////////////////
+    
+    - Would like to add an onItemLongPress() to bring up a context menu to delete / edit Hobby items on the RecyclerView but this is too much. Settling to use an "x" icon on each hobby for deletion. Floating Action Bar will be used to add Hobbies

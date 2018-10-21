@@ -22,12 +22,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
-import android.view.View
 import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_add_profile.*
-
-
 
 
 /**
@@ -45,6 +44,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
      */
 
     //TODO: Load Data on Creation
+    //TODO: Data needs to update when user adds a new profile
 
     private var twoPane: Boolean = false
 
@@ -72,16 +72,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         viewModel.profiles.observe(this,
                 Observer<ArrayList<Profile>> { it?.let{repositoryRecyclerViewAdapter.replaceData(it)} })
 
-// Write a message to the database
-
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
 
         if (item_detail_container != null) {
             // The detail container view will be present only in the
@@ -99,6 +92,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         if (twoPane) {
             val fragment = ItemDetailFragment().apply {
                 arguments = Bundle().apply {
+                    putString(ItemDetailFragment.ARG_ITEM_DBID, profile.dbID)
                     putInt(ItemDetailFragment.ARG_ITEM_ID, profile.id)
                     putString(ItemDetailFragment.ARG_ITEM_NAME, profile.profileName)
                     putInt(ItemDetailFragment.ARG_ITEM_AGE, profile.age)
@@ -113,6 +107,8 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         } else {
             val intent = Intent(this, ItemDetailActivity::class.java).apply {
                 putExtra(ItemDetailFragment.ARG_ITEM_ID, profile.id)
+
+                println("Putting user DBID: ${profile.dbID}" )
 
 //                val gson = Gson()
 //                val type = object : TypeToken<List<Student>>() {
@@ -132,54 +128,34 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     }
 
-//    fun showDialog() {
-//        val newFragment : Fragment = AddProfileFragment.newInstance("test", "test")
-//        supportFragmentManager.beginTransaction().add(R.id.overlay_fragment_container, newFragment).commit()
-//    }
-
     fun showPopup() {
-//        val txtclose: TextView
-//        val btnFollow: Button
 
         dialog.setContentView(R.layout.fragment_add_profile)
 
+        val radioGroup = dialog.findViewById<RadioGroup>(R.id.addprofile_gender_rg)
+
         dialog.findViewById<Button>(R.id.addprofile_button).setOnClickListener {
             val database = FirebaseDatabase.getInstance()
-                val myRef = database.getReference()
+            val myRef = database.getReference()
 
-             val userId : String = myRef.push().key!!
-
+            val dbID : String = myRef.push().key!!
             val list : ArrayList<String> = arrayListOf("Football", "Medicine", "Sleeping")
 
-            val al = Profile(4, "Alex Ward", 26, "Male", list)
-//                users.put("5", Profile(5, "Lauren M", 27, "Female", list))
+            val selectedId  = radioGroup.checkedRadioButtonId
+            val radioButton  = dialog.findViewById<RadioButton>(selectedId)
+            val profileName  = dialog.findViewById<EditText>(R.id.addprofile_name).text.toString()
+            val age  = dialog.findViewById<EditText>(R.id.addprofile_age).text.toString().toInt()
+
+
+            val uniqueUserID = (System.currentTimeMillis()/1000).toInt()
+
+            val al = Profile(dbID, uniqueUserID, profileName, age, radioButton.text.toString(), list)
+
 
                 dialog.dismiss()
-                myRef.child(userId).setValue(al)
+                myRef.child(dbID).setValue(al)
         }
 
-//        txtclose = myDialog.findViewById(R.id.txtclose)
-//        txtclose.text = "M"
-//        btnFollow = myDialog.findViewById(R.id.btnfollow) as Button
-
-//        addprofile_name.setText("Testing")
-
-//        addprofile_button.setOnClickListener(View.OnClickListener() {
-//            println("Add Profile")
-//        })
-
-//        addprofile_button.setOnClickListener {
-//                val database = FirebaseDatabase.getInstance()
-//                val myRef = database.getReference()
-//                val users = HashMap<String, Profile>()
-//
-//
-//                users.put("4", Profile(4, "Alex Ward", 26, "Male", listOf("Football", "Medicine", "Sleeping") as ArrayList<String>))
-//                users.put("5", Profile(5, "Lauren M", 27, "Female", listOf("Real Estate", "West Hartford", "Vodka") as ArrayList<String>))
-//
-//                myDialog.dismiss()
-//                myRef.setValue(users)
-//            }
 
 
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

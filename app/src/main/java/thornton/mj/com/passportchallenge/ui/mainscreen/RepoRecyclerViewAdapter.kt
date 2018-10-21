@@ -1,7 +1,9 @@
 package thornton.mj.com.passportchallenge.ui.mainscreen
 
 import android.support.v7.widget.RecyclerView
+import android.view.ContextMenu
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import thornton.mj.com.passportchallenge.databinding.RvItemProfileBinding
@@ -42,11 +44,11 @@ class RepositoryRecyclerViewAdapter(private var items: ArrayList<Profile>,
                     println("Pressed ViewHolder!")
                 })
 
-
             }
 
             binding.executePendingBindings()
         }
+
     }
 
 }

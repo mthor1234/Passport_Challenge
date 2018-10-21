@@ -12,9 +12,9 @@ import kotlin.collections.ArrayList
 // Holds the Local Data
 class RepoRemoteDataSource() {
 
+    //TODO: Create singleton database so there is only one instance
     val database = FirebaseDatabase.getInstance()
     val myRef = database.getReference()
-
     var data = ArrayList<Profile>()
 
 
@@ -57,10 +57,11 @@ class RepoRemoteDataSource() {
 
 
             var userProfile = Profile(
-            snapshot.child("ID").value.toString().toInt(),
-                    snapshot.child("ProfileName").value.toString(),
-                    snapshot.child("Age").value.toString().toInt(),
-                    snapshot.child("Gender").value.toString(),
+                    snapshot.child("dbID").value.toString(),
+                    snapshot.child("id").value.toString().toInt(),
+                    snapshot.child("profileName").value.toString(),
+                    snapshot.child("age").value.toString().toInt(),
+                    snapshot.child("gender").value.toString(),
                     createHobbieList(snapshot)
             )
 
@@ -72,10 +73,8 @@ class RepoRemoteDataSource() {
 
     fun createHobbieList(snapshot: DataSnapshot): ArrayList<String> {
         val list = ArrayList<String>()
-        for (item in snapshot.child("Hobbies").children) {
-
+        for (item in snapshot.child("hobbies").children) {
             println("Item: " + item.value.toString())
-
             list.add(item.value.toString())
         }
         return list
@@ -85,6 +84,4 @@ class RepoRemoteDataSource() {
     interface OnRepoRemoteReadyCallback {
         fun onRemoteDataReady(data: ArrayList<Profile>)
     }
-
-
 }

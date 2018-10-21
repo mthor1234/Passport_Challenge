@@ -9,8 +9,11 @@
         android:id="@+id/addprofile_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
         android:hint="@string/name"
+        android:inputType="text"
+        android:maxLines="1"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="25dp"/>
 
@@ -18,32 +21,53 @@
         android:id="@+id/addprofile_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:inputType="number"
+        android:maxLines="1"
         android:hint="@string/age"
         app:layout_constraintTop_toBottomOf="@id/addprofile_name"/>
 
-    <EditText
-        android:id="@+id/addprofile_gender"
-        android:layout_width="match_parent"
+
+    <RadioGroup
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
-        android:hint="@string/gender"
-        app:layout_constraintTop_toBottomOf="@id/addprofile_age"/>
+        android:id="@+id/addprofile_gender_rg"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/addprofile_age">
+
+        <RadioButton
+            android:id="@+id/addprofile_gender_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"/>
+
+        <RadioButton
+            android:id="@+id/addprofile_gender_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"/>
+    </RadioGroup>
+
+
 
     <EditText
         android:id="@+id/addprofile_hobbies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
         android:hint="@string/hobbies"
-        app:layout_constraintTop_toBottomOf="@id/addprofile_gender"/>
+        app:layout_constraintTop_toBottomOf="@id/addprofile_gender_rg"/>
 
     <Button
         android:id="@+id/addprofile_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save_profile"
-        android:textColor="@color/colorAccent"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
         android:layout_marginTop="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

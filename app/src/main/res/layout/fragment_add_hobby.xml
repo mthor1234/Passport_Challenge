@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.detailscreen.AddHobbyFragment">
+
+    <EditText
+        android:id="@+id/addhobby_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_hobby"
+        android:textColorHint="@color/black"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="25dp"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:lines="1"/>
+
+    <Button
+        android:id="@+id/addhobby_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@id/addhobby_et"
+        android:layout_marginTop="50dp"
+        android:text="@string/add"/>
+
+</android.support.constraint.ConstraintLayout>

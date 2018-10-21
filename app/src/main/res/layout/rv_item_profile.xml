@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:layout_margin="8dp"
-        android:background="@{profile.gender.equals(@string/male) ? @drawable/blue : @drawable/pink}">
+        android:background="@{profile.gender.equalsIgnoreCase(@string/male) ? @drawable/blue : @drawable/pink}">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

@@ -1,7 +1,7 @@
 package thornton.mj.com.passportchallenge.repo
 
 // Holds the user's information to build a profile
-class Profile(var id : Int, var profileName : String, var age: Int, var gender: String,
+class Profile(var dbID : String, var id : Int, var profileName : String, var age: Int, var gender: String,
               var hobbies: ArrayList<String> ) {
 
     private var sb = StringBuilder()

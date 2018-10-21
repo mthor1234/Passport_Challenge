@@ -12,13 +12,13 @@ class RepoLocalDataSource() {
 
     fun getProfiles(onRepositoryReadyCallback : OnRepoLocalReadyCallback){
         var arrayList = ArrayList<Profile>()
-        arrayList.add(Profile(1, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, Football")))
-        arrayList.add(Profile(2, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, Snowboarding")))
-        arrayList.add(Profile(3, "MJ Thornton From Local", 26, Gender.FEMALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, MMA")))
-        arrayList.add(Profile(4, "MJ Thornton From Local", 26, Gender.FEMALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
-        arrayList.add(Profile(5, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
-        arrayList.add(Profile(6, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
-        arrayList.add(Profile(7, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
+        arrayList.add(Profile("1234", 1, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, Football")))
+        arrayList.add(Profile("1234",2, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, Snowboarding")))
+        arrayList.add(Profile("1234",3, "MJ Thornton From Local", 26, Gender.FEMALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android, MMA")))
+        arrayList.add(Profile("1234",4, "MJ Thornton From Local", 26, Gender.FEMALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
+        arrayList.add(Profile("1234",5, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
+        arrayList.add(Profile("1234",6, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
+        arrayList.add(Profile("1234",7, "MJ Thornton From Local", 26, Gender.MALE, arrayListOf("Boxing", "Jiu-Jitsu", "Android")))
 
         Handler().postDelayed({ onRepositoryReadyCallback.onLocalDataReady(arrayList) }, 2000)
     }
