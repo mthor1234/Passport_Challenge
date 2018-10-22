@@ -55,8 +55,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent"
         android:layout_marginLeft="10dp"
-        app:layout_constraintTop_toTopOf="@id/profile_id"
-        app:layout_constraintLeft_toRightOf="@id/profile_id" />
+        app:layout_constraintTop_toTopOf="@id/profile_age"
+        app:layout_constraintLeft_toRightOf="@id/profile_age" />
 
     <TextView
         android:id="@+id/profile_hobbies_label"

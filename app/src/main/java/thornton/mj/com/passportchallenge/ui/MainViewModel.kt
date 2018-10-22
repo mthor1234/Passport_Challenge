@@ -4,6 +4,7 @@ package thornton.mj.com.passportchallenge.ui
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
 import android.databinding.ObservableField
 import thornton.mj.com.passportchallenge.repo.*
 import thornton.mj.com.passportchallenge.repo.RepoModel.*
@@ -32,6 +33,7 @@ class MainViewModel : AndroidViewModel {
 
 
     // TODO: Change SORT ENUM to have NameSortAscending, NameSortDescending, AGESORTASCENDING, AGESORTDESCENDING, NONE. Then create a toggle() method that will toggle between these
+    // TODO: On Network status change, if connected, then ping remote data pull / update
 
     private var nameSortState : MenuState = MenuState.REMOVED
     private var ageSortState : MenuState = MenuState.REMOVED
@@ -48,25 +50,20 @@ class MainViewModel : AndroidViewModel {
 
     // Update isLoading, set text, and make callback to get profiles
 
-    fun loadProfiles(){
+    fun loadProfiles(context : Context){
         isLoading.set(true)
         repoModel.getProfiles(object : OnRepositoryReadyCallback{
             override fun onDataReady(data: ArrayList<Profile>) {
                 isLoading.set(false)
                 profiles.value = data
 
-                // Make a copy of profiles
-//                copyOfProfiles.value = data
-
-               // profiles.value!!.sortBy{it.id}
                 copyOfProfiles.value =  profiles.value
-
 
                 copyOfProfiles.value!!.forEach {
                     println("Copy of Profiles: " + it.hobbies)
                 }
             }
-        })
+        }, context)
     }
 
 // Sort the profiles based on user selection

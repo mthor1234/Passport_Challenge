@@ -2,11 +2,12 @@
 
 
 /////////// LATEST COMMIT //////////////
-Summary:
+Summary: Added rough support for Room/SQL Lite local data storage. Able to store / retrieve profiles. Now I just need to shape the functionality to fit in with the app
 
-    - Recyclerview Data loads on start
-    - Removed DummyContent
-    - Removed Refresh Button
+    - item_detail.xml -> Moved gender to the right of the profile age
+    - Added: AppDatabase, Converters, ProfileDao
+    - Edited Profile to be a dataclass / have Room annotations
+
 
 
 

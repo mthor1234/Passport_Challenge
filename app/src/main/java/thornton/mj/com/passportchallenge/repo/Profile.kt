@@ -1,7 +1,18 @@
 package thornton.mj.com.passportchallenge.repo
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverter
+import android.arch.persistence.room.TypeConverters
+
 // Holds the user's information to build a profile
-class Profile(var dbID : String, var id : Int, var profileName : String, var age: Int, var gender: String,
+@Entity
+data class Profile(@PrimaryKey(autoGenerate = false)
+              var dbID : String,
+              var id : Int,
+              var profileName : String,
+              var age: Int,
+              var gender: String,
               var hobbies: ArrayList<String> ) {
 
 
@@ -18,4 +29,5 @@ class Profile(var dbID : String, var id : Int, var profileName : String, var age
     fun printProfile(){
         println("id : $id Name: $profileName  Age: $age  Gender: $gender  Hobbies: ${getStringOfHobbies()}")
     }
+
 }

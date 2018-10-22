@@ -22,11 +22,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
+import android.os.Handler
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.google.firebase.database.FirebaseDatabase
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import thornton.mj.com.passportchallenge.repo.Gender
+import thornton.mj.com.passportchallenge.repo.room.AppDatabase
+import thornton.mj.com.passportchallenge.repo.room.ProfileDao
 
 
 /**
@@ -46,15 +53,20 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     //TODO" XML for Adding Hobbies when creating profile. Needs to be dynamic
     //TODO: Move Remove and Add Proile to RepoModel
     //TODO: Update data when hobbies are editied or profile is deleted
+    //TODO: Store / Retrieve Photos from Firebase
+    //TODO: SQLite backend
 
     private var twoPane: Boolean = false
-
     lateinit var dialog : Dialog
 
     // Create binding
     lateinit var binding : ActivityItemListBinding
     lateinit var viewModel : MainViewModel
     lateinit var menu : Menu
+
+//    private var db: AppDatabase? = null
+//    private var profileDao: ProfileDao? = null
+
 
     private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
 
@@ -89,7 +101,10 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         }
 
         // Load the profiles from the RepoModel on start
-        viewModel.loadProfiles()
+        viewModel.loadProfiles(this)
+
+        // TESTING ROOM
+//        roomTest()
 
     }
 
@@ -227,6 +242,10 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         println("Add Profile Interaction")
+    }
+
+    fun roomTest(){
+
     }
 
 }

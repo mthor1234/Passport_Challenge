@@ -1,6 +1,7 @@
 package thornton.mj.com.passportchallenge.repo
 
 
+import android.content.Context
 import thornton.mj.com.passportchallenge.util.NetManager
 import java.util.ArrayList
 
@@ -10,7 +11,7 @@ class RepoModel(val netManager : NetManager) {
     private val remoteDataSource = RepoRemoteDataSource()
 
 
-    fun getProfiles(onRepositoryReadyCallback: OnRepositoryReadyCallback){
+    fun getProfiles(onRepositoryReadyCallback: OnRepositoryReadyCallback, context : Context){
 
         netManager.isConnectedToInternet?.let {
             if(it) {
@@ -25,7 +26,7 @@ class RepoModel(val netManager : NetManager) {
                     override fun onLocalDataReady(data: ArrayList<Profile>) {
                         onRepositoryReadyCallback.onDataReady(data)
                     }
-                })
+                }, context)
             }
         }
     }
