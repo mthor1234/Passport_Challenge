@@ -43,10 +43,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
      * device.
      */
 
-    //TODO: Load Data on Creation
-    //TODO: Data needs to update when user adds a new profile
     //TODO" XML for Adding Hobbies when creating profile. Needs to be dynamic
     //TODO: Move Remove and Add Proile to RepoModel
+    //TODO: Update data when hobbies are editied or profile is deleted
 
     private var twoPane: Boolean = false
 
@@ -89,11 +88,12 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             twoPane = true
         }
 
+        // Load the profiles from the RepoModel on start
+        viewModel.loadProfiles()
+
     }
 
     override fun onItemClick(position: Int, profile: Profile) {
-
-//        val item = v.tag as profile
         if (twoPane) {
             val fragment = ItemDetailFragment().apply {
                 arguments = Bundle().apply {

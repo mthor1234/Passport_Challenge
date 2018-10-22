@@ -1,5 +1,17 @@
 # Passport_Challenge
 
+
+/////////// LATEST COMMIT //////////////
+Summary:
+
+    - Recyclerview Data loads on start
+    - Removed DummyContent
+    - Removed Refresh Button
+
+
+
+
+
 Utilizes a MVVM with a Repository(s), DataBinding, and LiveData Design Pattern.
 
 Decided to use a Master/Detail layout to easily display profile views while supporting wider screen devices like Tablets
@@ -44,6 +56,8 @@ Issues:
     - How should I handle creating a new user profile? Dialog Fragment???
         * Used a Dialog Fragment that pops up and displays a form to the user. FB backend is updated when the user clicks submit
 
+    - How do I add a filter to the RecyclerView?
+        * Guessing I make a copy of the mutablelivedata from the database because if I add a filter to the data directly, it will overwrite the data?
 
 ////////// DETAIL SCREEN //////////////////////
     

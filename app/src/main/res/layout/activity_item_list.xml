@@ -50,7 +50,7 @@
             android:layout_height="48dp"
             android:indeterminate="true"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,52 +62,33 @@
             android:layout_height="0dp"
             android:indeterminate="true"
             android:visibility="@{viewModel.isLoading ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/app_bar"
             tools:listitem="@layout/rv_item_profile" />
 
-        <Button
-            android:id="@+id/refresh_button"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:onClick="@{() -> viewModel.loadProfiles()}"
-            android:clickable="@{viewModel.isLoading ? false : true}"
-            android:text="Refresh"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-    </android.support.constraint.ConstraintLayout>
+        <!--<Button-->
+            <!--android:id="@+id/refresh_button"-->
+            <!--android:layout_width="160dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:onClick="@{() -> viewModel.loadProfiles()}"-->
+            <!--android:clickable="@{viewModel.isLoading ? false : true}"-->
+            <!--android:text="Refresh"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintVertical_bias="1.0" />-->
 
+    </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
 </layout>
 
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/frameLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-        <!--<include layout="@layout/item_list" />-->
-    <!--</FrameLayout>-->
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
-
-
-<!--</android.support.design.widget.CoordinatorLayout>-->
