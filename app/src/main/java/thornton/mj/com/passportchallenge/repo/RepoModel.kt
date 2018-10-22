@@ -12,7 +12,6 @@ class RepoModel(val netManager : NetManager) {
 
     fun getProfiles(onRepositoryReadyCallback: OnRepositoryReadyCallback){
 
-
         netManager.isConnectedToInternet?.let {
             if(it) {
                 remoteDataSource.getProfiles(object : RepoRemoteDataSource.OnRepoRemoteReadyCallback {
@@ -29,7 +28,6 @@ class RepoModel(val netManager : NetManager) {
                 })
             }
         }
-
     }
 
 

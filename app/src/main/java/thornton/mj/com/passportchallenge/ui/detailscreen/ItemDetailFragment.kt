@@ -29,6 +29,7 @@ import org.jetbrains.anko.support.v4.toast
 import thornton.mj.com.passportchallenge.R
 import thornton.mj.com.passportchallenge.repo.Profile
 import thornton.mj.com.passportchallenge.ui.mainscreen.ItemListActivity
+import thornton.mj.com.passportchallenge.util.equalsIgnoreCase
 
 /**
  * A fragment representing a single Item detail screen.
@@ -77,7 +78,7 @@ class ItemDetailFragment : Fragment(){
 
         profile?.let {
             // Sets background color of Toolbar depending on Gender
-            if (profile.gender.equals(resources.getString(R.string.male))) {
+            if (profile.gender.equalsIgnoreCase(resources.getString(R.string.male))) {
                 activity?.toolbar_layout!!.setBackgroundColor(resources.getColor(R.color.blue))
             } else {
                 activity?.toolbar_layout!!.setBackgroundColor(resources.getColor(R.color.pink))

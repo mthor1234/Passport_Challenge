@@ -52,6 +52,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     // Create binding
     lateinit var binding : ActivityItemListBinding
+    lateinit var viewModel : MainViewModel
+    lateinit var menu : Menu
+
     private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
 
 
@@ -60,7 +63,9 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 //        setContentView(R.layout.activity_item_list)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
-        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
         binding.viewModel = viewModel
         binding.executePendingBindings()
 
@@ -116,6 +121,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     }
 
+    // Display popup to add a new profile
     fun showPopup() {
 
         dialog.setContentView(R.layout.fragment_add_profile)
@@ -136,7 +142,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
 
             val uniqueUserID = (System.currentTimeMillis()/1000).toInt()
-
             val al = Profile(dbID, uniqueUserID, profileName, age, radioButton.text.toString(), list)
 
 
@@ -151,6 +156,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menu = menu!!
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -158,12 +164,55 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id : Int = item!!.itemId
 
-
         when(id){
-            R.id.menu_sort ->  {
-                println("Sort")
-//                var sortedListByName = DummyContent.ITEMS.sortedWith(compareBy { it.age })
+            R.id.menu_sort_by_name -> {
+                menu.findItem(R.id.menu_sort_by_age).setIcon(null)
+
+                if( viewModel.getnameSortState().equals(MenuState.REMOVED)) {
+                    println("Sort NAME ASCENDING ")
+                    viewModel.setnameSortState(MenuState.ASCENDING)
+                    viewModel.sortProfiles("NAME", MenuState.ASCENDING)
+                    item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
+                }
+                else if( viewModel.getnameSortState().equals(MenuState.ASCENDING)) {
+                    println("Sort NAME DESCENDING ")
+                    viewModel.setnameSortState(MenuState.DESCENDING)
+                    viewModel.sortProfiles("NAME", MenuState.DESCENDING)
+                    item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
+                }
+                else{
+                    println("Sort NAME DESCENDING ")
+                    viewModel.setnameSortState(MenuState.REMOVED)
+                    viewModel.sortProfiles("NAME", MenuState.REMOVED)
+                    item.setIcon(null)
+                }
             }
+
+
+            R.id.menu_sort_by_age -> {
+                menu.findItem(R.id.menu_sort_by_name).setIcon(null)
+
+                if( viewModel.getageSortState().equals(MenuState.REMOVED)) {
+                    println("Sort AGE ASCENDING ")
+                    viewModel.setageSortState(MenuState.ASCENDING)
+                    viewModel.sortProfiles("AGE", MenuState.ASCENDING)
+                    item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
+
+                }
+                else if( viewModel.getageSortState().equals(MenuState.ASCENDING)) {
+                    println("Sort AGE DESCENDING ")
+                    viewModel.setageSortState(MenuState.DESCENDING)
+                    viewModel.sortProfiles("AGE", MenuState.DESCENDING)
+                    item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
+                }
+                else{
+                    println("Sort AGE DESCENDING ")
+                    viewModel.setageSortState(MenuState.REMOVED)
+                    viewModel.sortProfiles("AGE", MenuState.REMOVED)
+                    item.setIcon(null)
+                }
+            }
+
             R.id.menu_filter ->  println("Filter")
             R.id.menu_add ->  {
                 println("Add Profile")
