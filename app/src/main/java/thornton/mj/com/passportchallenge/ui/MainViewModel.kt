@@ -78,9 +78,6 @@ class MainViewModel : AndroidViewModel {
                 // SORT ASCENDING, DESCENDING, DEFAULT
                 if (modifier.equals(MenuState.ASCENDING)) {
                     copyOfProfiles.value!!.sortBy { it.age }
-//                    for (obj in profiles.value!!) {
-//                        println(obj.printProfile())
-//                    }
                 }
                 else if( modifier.equals(MenuState.DESCENDING)){
                     copyOfProfiles.value!!.sortByDescending{it.age }
@@ -94,9 +91,6 @@ class MainViewModel : AndroidViewModel {
                 // SORT ASCENDING, DESCENDING, DEFAULT
                 if (modifier.equals(MenuState.ASCENDING)) {
                     copyOfProfiles.value!!.sortBy { it.profileName }
-//                    for (obj in profiles.value!!) {
-//                        println(obj.printProfile())
-//                    }
                 }
                 else if( modifier.equals(MenuState.DESCENDING)){
                     copyOfProfiles.value!!.sortByDescending{it.profileName }
@@ -117,22 +111,27 @@ class MainViewModel : AndroidViewModel {
     // TODO: NEED TO KEEP ON THE FILTER / SORT if a SORT / FILTER IS CALLED ON THE LIST. BY  SETTING CopyOfProfiles = Profiles, you lose the filters / sorts
     fun filterProfiles(){
 
-            if(filterState.equals(FilterState.MALE)) {
+            if(filterState.equals(FilterState.NONE)) {
                 copyOfProfiles.value = ArrayList(profiles.value!!.filter { it.gender.equals("Male", true) })
-                filterState = FilterState.FEMALE
-            }
-            else if(filterState.equals(FilterState.FEMALE)) {
-                copyOfProfiles.value = ArrayList(profiles.value!!.filter { it.gender.equals("Female", true) })
-                filterState = FilterState.NONE
-            }else{
-                copyOfProfiles.value = ArrayList(profiles.value!!.filter { it.gender.equals("Female", true) })
                 filterState = FilterState.MALE
             }
+            else if(filterState.equals(FilterState.MALE)) {
+                copyOfProfiles.value = ArrayList(profiles.value!!.filter { it.gender.equals("Female", true) })
+                filterState = FilterState.FEMALE
+            }else{
+                copyOfProfiles.value = profiles.value
+                filterState = FilterState.NONE
+            }
+    }
 
-//       profiles.value.forEach {
-//            println("FILTERED: ${it.printProfile()}")
-//        }
+    fun addProfile(profile : Profile){
+        profiles.value!!.add(profile)
+        copyOfProfiles.value = profiles.value
+    }
 
+    fun removeProfile(profile : Profile){
+        profiles.value!!.add(profile)
+        copyOfProfiles.value = profiles.value
     }
 
     // GETTERS / SETTERS

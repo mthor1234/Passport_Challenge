@@ -45,6 +45,8 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     //TODO: Load Data on Creation
     //TODO: Data needs to update when user adds a new profile
+    //TODO" XML for Adding Hobbies when creating profile. Needs to be dynamic
+    //TODO: Move Remove and Add Proile to RepoModel
 
     private var twoPane: Boolean = false
 
@@ -59,7 +61,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_item_list)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item_list)
 
@@ -117,7 +118,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             }
             startActivity(intent)
         }
-
     }
 
     // Display popup to add a new profile
@@ -140,17 +140,16 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             val profileName  = dialog.findViewById<EditText>(R.id.addprofile_name).text.toString()
             val age  = dialog.findViewById<EditText>(R.id.addprofile_age).text.toString().toInt()
 
-
             val uniqueUserID = (System.currentTimeMillis()/1000).toInt()
-            val al = Profile(dbID, uniqueUserID, profileName, age, radioButton.text.toString(), list)
+            val createdProfile = Profile(dbID, uniqueUserID, profileName, age, radioButton.text.toString(), list)
+
+            // Update the profile to the list. Need to move this method all the way to the repomodel / remote/local data source
+            viewModel.addProfile(createdProfile)
 
 
                 dialog.dismiss()
-                myRef.child(dbID).setValue(al)
+                myRef.child(dbID).setValue(createdProfile)
         }
-
-
-
         dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
@@ -218,10 +217,12 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
                 println("Add Profile")
                 showPopup()
             }
-        }
 
+        }
+        repositoryRecyclerViewAdapter.notifyDataSetChanged()
         return super.onOptionsItemSelected(item)
     }
+
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

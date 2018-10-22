@@ -32,20 +32,9 @@ class AddProfileFragment : Fragment() {
         }
     }
 
-    //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        if (getArguments() != null) {
-//                mParam1 = getArguments().getString(ARG_PARAM1);
-//                mParam2 = getArguments().getString(ARG_PARAM2);
-//            }
-//        return super.onCreateDialog(savedInstanceState)
-//    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        //Find the +1 button
-        //        mPlusOneButton = (PlusOneButton) view.findViewById(R.id.plus_one_button);
 
         return inflater.inflate(R.layout.fragment_add_profile, container, false)
     }

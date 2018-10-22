@@ -4,10 +4,10 @@ package thornton.mj.com.passportchallenge.repo
 class Profile(var dbID : String, var id : Int, var profileName : String, var age: Int, var gender: String,
               var hobbies: ArrayList<String> ) {
 
-    private var sb = StringBuilder()
 
 
     fun getStringOfHobbies() : String{
+        var sb = StringBuilder()
         hobbies.forEach {
             sb.append(it)
             sb.append("\t")
