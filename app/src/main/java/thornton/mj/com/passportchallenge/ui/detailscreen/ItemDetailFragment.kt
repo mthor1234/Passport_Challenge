@@ -230,41 +230,6 @@ class ItemDetailFragment : Fragment(){
         const val ARG_ITEM_HOBBIES = "item_hobbies"
         const val ARG_ITEM_PROFILE = "item_profile"
     }
-
-
-
-    class MyItemRecyclerViewAdapter(
-            val values: List<String>,
-            private val twoPane : Boolean )
-        : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
-
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_list_content, parent, false)
-
-            return ViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val item = values[position]
-            holder.idView.text = item
-
-            with(holder.itemView) {
-                tag = item
-            }
-        }
-
-        override fun getItemCount() = values.size
-
-
-
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val idView: TextView = view.id_text
-
-        }
-    }
-
 }
 
 

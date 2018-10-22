@@ -57,7 +57,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_item_list)
@@ -71,10 +70,10 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
         dialog = Dialog(this)
 
-
         binding.repositoryRv.layoutManager = LinearLayoutManager(this)
         binding.repositoryRv.adapter = repositoryRecyclerViewAdapter
-        viewModel.profiles.observe(this,
+
+        viewModel.copyOfProfiles.observe(this,
                 Observer<ArrayList<Profile>> { it?.let{repositoryRecyclerViewAdapter.replaceData(it)} })
 
         setSupportActionBar(toolbar)
@@ -123,6 +122,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     // Display popup to add a new profile
     fun showPopup() {
+        // TODO: Handle xml layout to add hobbies dynamically
 
         dialog.setContentView(R.layout.fragment_add_profile)
 
@@ -133,7 +133,7 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             val myRef = database.getReference()
 
             val dbID : String = myRef.push().key!!
-            val list : ArrayList<String> = arrayListOf("Football", "Medicine", "Sleeping")
+            val list : ArrayList<String> = arrayListOf("Surfing")
 
             val selectedId  = radioGroup.checkedRadioButtonId
             val radioButton  = dialog.findViewById<RadioButton>(selectedId)
@@ -164,23 +164,21 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id : Int = item!!.itemId
 
-        when(id){
+        when(id) {
             R.id.menu_sort_by_name -> {
                 menu.findItem(R.id.menu_sort_by_age).setIcon(null)
 
-                if( viewModel.getnameSortState().equals(MenuState.REMOVED)) {
+                if (viewModel.getnameSortState().equals(MenuState.REMOVED)) {
                     println("Sort NAME ASCENDING ")
                     viewModel.setnameSortState(MenuState.ASCENDING)
                     viewModel.sortProfiles("NAME", MenuState.ASCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
-                }
-                else if( viewModel.getnameSortState().equals(MenuState.ASCENDING)) {
+                } else if (viewModel.getnameSortState().equals(MenuState.ASCENDING)) {
                     println("Sort NAME DESCENDING ")
                     viewModel.setnameSortState(MenuState.DESCENDING)
                     viewModel.sortProfiles("NAME", MenuState.DESCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
-                }
-                else{
+                } else {
                     println("Sort NAME DESCENDING ")
                     viewModel.setnameSortState(MenuState.REMOVED)
                     viewModel.sortProfiles("NAME", MenuState.REMOVED)
@@ -192,20 +190,18 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             R.id.menu_sort_by_age -> {
                 menu.findItem(R.id.menu_sort_by_name).setIcon(null)
 
-                if( viewModel.getageSortState().equals(MenuState.REMOVED)) {
+                if (viewModel.getageSortState().equals(MenuState.REMOVED)) {
                     println("Sort AGE ASCENDING ")
                     viewModel.setageSortState(MenuState.ASCENDING)
                     viewModel.sortProfiles("AGE", MenuState.ASCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
 
-                }
-                else if( viewModel.getageSortState().equals(MenuState.ASCENDING)) {
+                } else if (viewModel.getageSortState().equals(MenuState.ASCENDING)) {
                     println("Sort AGE DESCENDING ")
                     viewModel.setageSortState(MenuState.DESCENDING)
                     viewModel.sortProfiles("AGE", MenuState.DESCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
-                }
-                else{
+                } else {
                     println("Sort AGE DESCENDING ")
                     viewModel.setageSortState(MenuState.REMOVED)
                     viewModel.sortProfiles("AGE", MenuState.REMOVED)
@@ -213,8 +209,12 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
                 }
             }
 
-            R.id.menu_filter ->  println("Filter")
-            R.id.menu_add ->  {
+            R.id.menu_filter -> {
+                viewModel.filterProfiles()
+            }
+
+
+            R.id.menu_add -> {
                 println("Add Profile")
                 showPopup()
             }

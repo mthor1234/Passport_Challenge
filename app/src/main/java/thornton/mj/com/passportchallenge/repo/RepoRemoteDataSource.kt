@@ -45,12 +45,9 @@ class RepoRemoteDataSource() {
 
     fun setData(dataSnapshot: DataSnapshot): ArrayList<Profile> {
 
-        val list = ArrayList<String>()
         val profiles = ArrayList<Profile>()
-        list.add("Test")
 
         for (snapshot in dataSnapshot.children) {
-
 
             var userProfile = Profile(
                     snapshot.child("dbID").value.toString(),
