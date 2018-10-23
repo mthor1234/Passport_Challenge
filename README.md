@@ -2,14 +2,8 @@
 
 
 /////////// LATEST COMMIT //////////////
-Summary: Added rough support for Room/SQL Lite local data storage. Able to store / retrieve profiles. Now I just need to shape the functionality to fit in with the app
-
-    - item_detail.xml -> Moved gender to the right of the profile age
-    - Added: AppDatabase, Converters, ProfileDao
-    - Edited Profile to be a dataclass / have Room annotations
-
-
-
+Submission Push
+Summary: Removed Test files
 
 
 
@@ -19,6 +13,23 @@ Decided to use a Master/Detail layout to easily display profile views while supp
 
 
 Firebase backend using a Realtime Database
+
+
+
+If I had more time:
+
+    - I would like to use Dagger2 for dependency injection
+    - Handle profile image processing with Glide or Picasso
+    - Remain true to the MVVM design pattern (To save time, I started move away from the design and a few classes are messier than I would like)
+    - Create a singleton DB to ensure only one instance
+    - Explore using RxJava or Coroutines
+    - Smarter DB calls / deciding when to use local db vs remote db and keeping eachother updated
+    - Nicer layouts
+    - Continued to use Databinding past ItemListActivity
+    - More toasts / snackbar messages to the user on item changes
+    - Implicit camera call for user to take user profile or implicit call to grab a photo from somewhere
+
+
 
 
 
