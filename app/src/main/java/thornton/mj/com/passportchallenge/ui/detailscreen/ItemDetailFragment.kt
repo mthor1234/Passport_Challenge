@@ -38,7 +38,12 @@ import thornton.mj.com.passportchallenge.util.equalsIgnoreCase
  * on handsets.
  */
 
-// TODO: Delete Profiles
+
+// Represents the Profile View
+// Holds the user's information
+// Delete hobbies by swiping
+// Add hobbies using the "+" button
+// Delete profile by pressing 'x' button
 
 class ItemDetailFragment : Fragment(){
 
@@ -72,6 +77,7 @@ class ItemDetailFragment : Fragment(){
 
     }
 
+    // Set views
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.item_detail, container, false)
@@ -108,7 +114,6 @@ class ItemDetailFragment : Fragment(){
 
             override fun onMove(p0: RecyclerView, p1: RecyclerView.ViewHolder, p2: RecyclerView.ViewHolder): Boolean {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                // Don't think I Need to add anything here
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -124,6 +129,7 @@ class ItemDetailFragment : Fragment(){
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rootView.profile_rv)
 
+        // Add hobby
         addItemBtn.setOnClickListener{
             showPopup()
 
@@ -132,6 +138,8 @@ class ItemDetailFragment : Fragment(){
         return rootView
     }
 
+
+    // Displays popup to user to add a new hobby
     fun showPopup() {
 
         dialog.setContentView(R.layout.fragment_add_hobby)
@@ -147,9 +155,10 @@ class ItemDetailFragment : Fragment(){
 
                 dialog.dismiss()
 
-                val al = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, simpleAdapter.getItems())
-                myRef.child(profile.dbID).setValue(al)
+                val profile = Profile(profile.dbID, profile.id, profile.profileName, profile.age, profile.gender, simpleAdapter.getItems())
 
+
+                myRef.child(profile.dbID).setValue(profile)
                 dialog.dismiss()
 
             }else{
@@ -161,6 +170,7 @@ class ItemDetailFragment : Fragment(){
         dialog.show()
     }
 
+    // Displays alert dialog to delete this profile
     fun showDeleteProfilePopUp(){
         // Late initialize an alert dialog object
         lateinit var dialog:AlertDialog
@@ -181,9 +191,6 @@ class ItemDetailFragment : Fragment(){
             when(which){
                 DialogInterface.BUTTON_POSITIVE -> {
                     toast("Yes button clicked.")
-                    // TODO: Run this in bg thread???
-
-                    println("REMOVE PROFILE: " + profile.dbID)
 
                     myRef.child(profile.dbID).removeValue()
 
@@ -214,6 +221,8 @@ class ItemDetailFragment : Fragment(){
         // Finally, display the alert dialog
         dialog.show()
     }
+
+
 
 
 

@@ -15,6 +15,9 @@ import thornton.mj.com.passportchallenge.util.equalsIgnoreCase
 
 import kotlin.collections.ArrayList
 
+// ViewModel for the MVVM pattern
+// Acts as the layer to communicate between the Activity and RepoModel
+// Lifecycle aware
 class MainViewModel : AndroidViewModel {
 
     constructor(application: Application) : super(application)
@@ -40,14 +43,6 @@ class MainViewModel : AndroidViewModel {
     private var filterState : FilterState = FilterState.NONE
 
 
-    // Callback to communicate with Repo
-//    val onDataReadyCallback = object : OnDataReadyCallback{
-//        override fun onDataReady(data: String) {
-//            isLoading = false
-//            text = data
-//        }
-//    }
-
     // Update isLoading, set text, and make callback to get profiles
 
     fun loadProfiles(context : Context){
@@ -56,12 +51,8 @@ class MainViewModel : AndroidViewModel {
             override fun onDataReady(data: ArrayList<Profile>) {
                 isLoading.set(false)
                 profiles.value = data
-
                 copyOfProfiles.value =  profiles.value
 
-                copyOfProfiles.value!!.forEach {
-                    println("Copy of Profiles: " + it.hobbies)
-                }
             }
         }, context)
     }

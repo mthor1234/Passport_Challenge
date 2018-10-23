@@ -5,6 +5,8 @@ import android.content.Context
 import thornton.mj.com.passportchallenge.util.NetManager
 import java.util.ArrayList
 
+// Abstraction layer for the local and remote repos. Allows ViewModel to deal directly with this
+
 class RepoModel(val netManager : NetManager) {
 
     private val localDataSource = RepoLocalDataSource()
@@ -17,7 +19,7 @@ class RepoModel(val netManager : NetManager) {
             if(it) {
                 remoteDataSource.getProfiles(object : RepoRemoteDataSource.OnRepoRemoteReadyCallback {
                     override fun onRemoteDataReady(data: ArrayList<Profile>) {
-                        localDataSource.saveProfiles(data)
+                        localDataSource.saveProfiles(data, context)
                         onRepositoryReadyCallback.onDataReady(data)
                     }
                 })

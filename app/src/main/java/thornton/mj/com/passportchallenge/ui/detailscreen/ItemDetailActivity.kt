@@ -14,7 +14,7 @@ import android.databinding.adapters.NumberPickerBindingAdapter.setValue
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-
+// Holds the DetailFragment
 
 /**
  * An activity representing a single Item detail screen. This
@@ -29,23 +29,11 @@ class ItemDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item_detail)
         setSupportActionBar(detail_toolbar)
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
+
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.

@@ -7,6 +7,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.item_list_content.view.*
 import thornton.mj.com.passportchallenge.R
 
+// Used to display the profile's hobbies within the "Profile View"
 class SimpleAdapter(private val items: ArrayList <String>) : RecyclerView.Adapter<SimpleAdapter.VH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {

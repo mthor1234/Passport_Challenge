@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import thornton.mj.com.passportchallenge.databinding.RvItemProfileBinding
 import thornton.mj.com.passportchallenge.repo.Profile
 
+// Adapter for RecyclerView that shows all of the profiles
 
 class RepositoryRecyclerViewAdapter(private var items: ArrayList<Profile>,
                                     private var listener: OnItemClickListener)
@@ -41,7 +42,6 @@ class RepositoryRecyclerViewAdapter(private var items: ArrayList<Profile>,
             binding.profile = profile
             if (listener != null) {
                 binding.root.setOnClickListener({ _ -> listener.onItemClick(layoutPosition, profile)
-                    println("Pressed ViewHolder!")
                 })
 
             }

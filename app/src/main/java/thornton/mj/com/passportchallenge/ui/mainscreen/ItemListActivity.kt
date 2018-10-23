@@ -23,6 +23,7 @@ import android.view.MenuItem
 import android.graphics.drawable.ColorDrawable
 import android.graphics.Color
 import android.os.Handler
+import android.support.v4.app.FragmentManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
@@ -44,17 +45,19 @@ import thornton.mj.com.passportchallenge.repo.room.ProfileDao
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
+
+// Acts as the "Main" activity. Holds the list of profiles. Elected to use a Master/Detail layout so tablets will benefit but I did not have the time
+// To build out the tablet functionality
+
 class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemClickListener, AddProfileFragment.OnFragmentInteractionListener {
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
 
-    //TODO" XML for Adding Hobbies when creating profile. Needs to be dynamic
     //TODO: Move Remove and Add Proile to RepoModel
-    //TODO: Update data when hobbies are editied or profile is deleted
     //TODO: Store / Retrieve Photos from Firebase
-    //TODO: SQLite backend
+    //TODO: If not connected to internet and local db is updated, need to update the FB backened
 
     private var twoPane: Boolean = false
     lateinit var dialog : Dialog
@@ -63,10 +66,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     lateinit var binding : ActivityItemListBinding
     lateinit var viewModel : MainViewModel
     lateinit var menu : Menu
-
-//    private var db: AppDatabase? = null
-//    private var profileDao: ProfileDao? = null
-
 
     private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
 
@@ -100,12 +99,12 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
             twoPane = true
         }
 
-        // Load the profiles from the RepoModel on start
+    }
+
+    // Load profiles from ViewModel -> RepoModel -> RemoteRepo/LocalRepo (Depending on connection)
+    override fun onStart() {
+        super.onResume()
         viewModel.loadProfiles(this)
-
-        // TESTING ROOM
-//        roomTest()
-
     }
 
     override fun onItemClick(position: Int, profile: Profile) {
@@ -137,37 +136,20 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
     // Display popup to add a new profile
     fun showPopup() {
-        // TODO: Handle xml layout to add hobbies dynamically
+        val ft = supportFragmentManager.beginTransaction()
+        val prev = supportFragmentManager.findFragmentByTag("dialog")
 
-        dialog.setContentView(R.layout.fragment_add_profile)
-
-        val radioGroup = dialog.findViewById<RadioGroup>(R.id.addprofile_gender_rg)
-
-        dialog.findViewById<Button>(R.id.addprofile_button).setOnClickListener {
-            val database = FirebaseDatabase.getInstance()
-            val myRef = database.getReference()
-
-            val dbID : String = myRef.push().key!!
-            val list : ArrayList<String> = arrayListOf("Surfing")
-
-            val selectedId  = radioGroup.checkedRadioButtonId
-            val radioButton  = dialog.findViewById<RadioButton>(selectedId)
-            val profileName  = dialog.findViewById<EditText>(R.id.addprofile_name).text.toString()
-            val age  = dialog.findViewById<EditText>(R.id.addprofile_age).text.toString().toInt()
-
-            val uniqueUserID = (System.currentTimeMillis()/1000).toInt()
-            val createdProfile = Profile(dbID, uniqueUserID, profileName, age, radioButton.text.toString(), list)
-
-            // Update the profile to the list. Need to move this method all the way to the repomodel / remote/local data source
-            viewModel.addProfile(createdProfile)
-
-
-                dialog.dismiss()
-                myRef.child(dbID).setValue(createdProfile)
+        if (prev != null) {
+            ft.remove(prev)
         }
-        dialog.getWindow().setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.show()
-    }
+        supportFragmentManager.beginTransaction().addToBackStack(null)
+
+        // Create and show the dialog.
+        val newFragment = AddProfileFragment.newInstance()
+        newFragment.show(ft, "dialog")
+
+        }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         this.menu = menu!!
@@ -175,6 +157,8 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
         return super.onCreateOptionsMenu(menu)
     }
 
+
+    // Handles sorting, filtering, and adding new profiles
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id : Int = item!!.itemId
 
@@ -183,17 +167,14 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
                 menu.findItem(R.id.menu_sort_by_age).setIcon(null)
 
                 if (viewModel.getnameSortState().equals(MenuState.REMOVED)) {
-                    println("Sort NAME ASCENDING ")
                     viewModel.setnameSortState(MenuState.ASCENDING)
                     viewModel.sortProfiles("NAME", MenuState.ASCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
                 } else if (viewModel.getnameSortState().equals(MenuState.ASCENDING)) {
-                    println("Sort NAME DESCENDING ")
                     viewModel.setnameSortState(MenuState.DESCENDING)
                     viewModel.sortProfiles("NAME", MenuState.DESCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
                 } else {
-                    println("Sort NAME DESCENDING ")
                     viewModel.setnameSortState(MenuState.REMOVED)
                     viewModel.sortProfiles("NAME", MenuState.REMOVED)
                     item.setIcon(null)
@@ -205,18 +186,15 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
                 menu.findItem(R.id.menu_sort_by_name).setIcon(null)
 
                 if (viewModel.getageSortState().equals(MenuState.REMOVED)) {
-                    println("Sort AGE ASCENDING ")
                     viewModel.setageSortState(MenuState.ASCENDING)
                     viewModel.sortProfiles("AGE", MenuState.ASCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_downward_white_24dp))
 
                 } else if (viewModel.getageSortState().equals(MenuState.ASCENDING)) {
-                    println("Sort AGE DESCENDING ")
                     viewModel.setageSortState(MenuState.DESCENDING)
                     viewModel.sortProfiles("AGE", MenuState.DESCENDING)
                     item.setIcon(getDrawable(R.drawable.ic_arrow_upward_white_24dp))
                 } else {
-                    println("Sort AGE DESCENDING ")
                     viewModel.setageSortState(MenuState.REMOVED)
                     viewModel.sortProfiles("AGE", MenuState.REMOVED)
                     item.setIcon(null)
@@ -229,7 +207,6 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
 
 
             R.id.menu_add -> {
-                println("Add Profile")
                 showPopup()
             }
 
@@ -239,13 +216,11 @@ class ItemListActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnIt
     }
 
 
-    override fun onFragmentInteraction(uri: Uri) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-        println("Add Profile Interaction")
-    }
-
-    fun roomTest(){
+    override fun onFragmentInteraction(profile : Profile) {
+        viewModel.addProfile(profile)
+        viewModel.loadProfiles(this)
 
     }
+
 
 }

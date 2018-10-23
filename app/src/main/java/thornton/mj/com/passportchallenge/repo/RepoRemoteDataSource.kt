@@ -9,7 +9,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlin.collections.ArrayList
 
-// Holds the Local Data
+// Holds the Remote Data
+// Uses Firebase Realtime Database
 class RepoRemoteDataSource() {
 
     //TODO: Create singleton database so there is only one instance
@@ -18,9 +19,9 @@ class RepoRemoteDataSource() {
     var data = ArrayList<Profile>()
 
 
+    // Gets profiles from FB Backend
     fun getProfiles(onRepositoryReadyCallback: OnRepoRemoteReadyCallback) {
         var arrayList = ArrayList<Profile>()
-
 
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
@@ -37,14 +38,12 @@ class RepoRemoteDataSource() {
             }
         })
 
-
         Handler().postDelayed({ onRepositoryReadyCallback.onRemoteDataReady(arrayList) }, 2000)
     }
 
 
-
+    // Set data into the FB backened
     fun setData(dataSnapshot: DataSnapshot): ArrayList<Profile> {
-
         val profiles = ArrayList<Profile>()
 
         for (snapshot in dataSnapshot.children) {
@@ -63,10 +62,10 @@ class RepoRemoteDataSource() {
         return profiles
     }
 
+    // Needed to convert "Hobbies" saved in FB backend from Strings -> ArrayList
     fun createHobbieList(snapshot: DataSnapshot): ArrayList<String> {
         val list = ArrayList<String>()
         for (item in snapshot.child("hobbies").children) {
-            println("Item: " + item.value.toString())
             list.add(item.value.toString())
         }
         return list

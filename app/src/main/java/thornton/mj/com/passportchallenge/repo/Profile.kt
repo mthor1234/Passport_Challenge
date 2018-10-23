@@ -6,6 +6,7 @@ import android.arch.persistence.room.TypeConverter
 import android.arch.persistence.room.TypeConverters
 
 // Holds the user's information to build a profile
+// Annotations are required for Room
 @Entity
 data class Profile(@PrimaryKey(autoGenerate = false)
               var dbID : String,

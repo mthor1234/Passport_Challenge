@@ -4,6 +4,7 @@ import android.arch.persistence.room.*
 import android.content.Context
 import thornton.mj.com.passportchallenge.repo.Profile
 
+// Room Database
 @Database(entities = [Profile::class], version = 1)
 @TypeConverters(Converters::class)
 

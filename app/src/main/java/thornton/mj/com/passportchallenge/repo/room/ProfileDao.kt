@@ -3,6 +3,7 @@ package thornton.mj.com.passportchallenge.repo.room
 import android.arch.persistence.room.*
 import thornton.mj.com.passportchallenge.repo.Profile
 
+// Used to interact with Room DB
 @Dao
 interface ProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
